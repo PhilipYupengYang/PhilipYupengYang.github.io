@@ -3,7 +3,21 @@
   Shape rule: interactive controls are pills, containers use --r (14px).
   One accent (--accent), used everywhere.
 */
+/* light is the default theme; dark is the toggle */
 :root,
+[data-theme="light"] {
+  --bg: #f5f7fc;
+  --surface: #ffffff;
+  --surface-2: #eef2fa;
+  --line: #dde4f1;
+  --text: #0f1830;
+  --muted: #56627d;
+  --accent: #2f62ff;
+  --accent-ink: #ffffff;
+  --accent-wash: rgba(47, 98, 255, 0.09);
+  --dot: #d2dbec;
+  --spot: rgba(47, 98, 255, 0.2);
+}
 [data-theme="dark"] {
   --bg: #0b1020;
   --surface: #11182b;
@@ -14,19 +28,8 @@
   --accent: #82a8ff;
   --accent-ink: #0b1020;
   --accent-wash: rgba(130, 168, 255, 0.12);
-  --grid: rgba(148, 160, 184, 0.06);
-}
-[data-theme="light"] {
-  --bg: #f2f4f8;
-  --surface: #ffffff;
-  --surface-2: #e9edf5;
-  --line: #d8deea;
-  --text: #0e1526;
-  --muted: #56627c;
-  --accent: #2b59d9;
-  --accent-ink: #ffffff;
-  --accent-wash: rgba(43, 89, 217, 0.08);
-  --grid: rgba(14, 21, 38, 0.05);
+  --dot: #1f2a45;
+  --spot: rgba(130, 168, 255, 0.2);
 }
 :root {
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
@@ -46,16 +49,8 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-/* faint measurement grid, fixed so it never repaints on scroll */
-body::before {
-  content: "";
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at 70% 0%, #000 0%, transparent 70%);
-}
+/* interactive dot field (assets/app.js, ported from React Bits DotGrid) */
+#dots { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
@@ -106,7 +101,7 @@ h1 {
 .btn-solid { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn-solid:hover { border-color: var(--accent); filter: brightness(1.08); }
 
-.graph { margin: 0; border: 1px solid var(--line); border-radius: var(--r); background: color-mix(in srgb, var(--surface) 60%, transparent); overflow: hidden; }
+.graph { margin: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
 .graph canvas { width: 100%; aspect-ratio: 1 / 0.82; display: block; cursor: default; }
 .graph figcaption { padding: 0 16px 14px; font-size: 13px; color: var(--muted); }
 
@@ -220,3 +215,27 @@ h1 {
 }
 
 .avatar { display: block; width: 88px; height: 88px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); margin-bottom: 28px; }
+
+/* cursor spotlight on cards (ported from Magic UI MagicCard): app.js sets --mx / --my */
+.spot { position: relative; isolation: isolate; }
+.spot::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, -999px) var(--my, -999px), var(--spot), transparent 70%);
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.spot:hover::before { opacity: 1; }
+.spot > .rim {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1.5px;
+  background: radial-gradient(260px circle at var(--mx, -999px) var(--my, -999px), var(--accent), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.spot:hover > .rim { opacity: 1; }
+.project, .timeline li { background: var(--surface); }
+.timeline li { border: 1px solid var(--line); border-radius: var(--r); padding: 22px 22px 22px 40px; }
+.timeline li::before { left: 20px; top: 28px; bottom: 22px; }
+.timeline li::after { left: 17px; top: 27px; }
+.timeline { gap: 20px; }
+.rows { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 4px 24px; }
+.rows li:last-child { border-bottom: 0; }

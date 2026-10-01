@@ -110,10 +110,110 @@
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem('theme', next); } catch (e) {}
     graph.recolor();
+    dots.recolor();
   });
 
   const graph = buildGraph(document.getElementById('graph'), profile, projects, leadership, slug);
+  const dots = buildDots(document.getElementById('dots'));
+  initSpotlight(document.querySelectorAll('.featured, .project, .timeline li, .graph'));
 })();
+
+// Cursor spotlight + lit border on cards. Ported from Magic UI's MagicCard (React + motion)
+// to plain CSS variables: the pointer position is written to --mx / --my on the hovered card.
+function initSpotlight(cards) {
+  cards.forEach((card) => {
+    card.classList.add('spot');
+    card.append(Object.assign(document.createElement('span'), { className: 'rim' }));
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+}
+
+// Full-page dot field that reacts to the cursor. Ported from React Bits' DotGrid:
+// dots near the pointer tint toward the accent and get pushed away by fast movement,
+// then spring back; a click sends a shockwave. GSAP inertia is replaced by a small spring.
+function buildDots(canvas) {
+  const ctx = canvas.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const GAP = 26, SIZE = 3, PROX = 140, SHOCK = 220;
+  let dots = [], W = 0, H = 0, base = [0, 0, 0], active = [0, 0, 0], idle = 0;
+  const ptr = { x: -9999, y: -9999, lx: 0, ly: 0, lt: 0, vx: 0, vy: 0 };
+
+  const rgb = (v) => {
+    const h = v.trim().replace('#', '');
+    return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+  };
+  function recolor() {
+    const cs = getComputedStyle(document.documentElement);
+    base = rgb(cs.getPropertyValue('--dot'));
+    active = rgb(cs.getPropertyValue('--accent'));
+    idle = 0;
+  }
+  function build() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dots = [];
+    const ox = (W % GAP) / 2, oy = (H % GAP) / 2;
+    for (let y = oy; y < H; y += GAP) for (let x = ox; x < W; x += GAP) dots.push({ cx: x, cy: y, dx: 0, dy: 0, vx: 0, vy: 0 });
+    idle = 0;
+  }
+  function kick(x, y, radius, strength) {
+    for (const d of dots) {
+      const ex = d.cx - x, ey = d.cy - y, dist = Math.hypot(ex, ey);
+      if (dist < radius) {
+        const f = (1 - dist / radius) * strength;
+        d.vx += (ex / (dist || 1)) * f; d.vy += (ey / (dist || 1)) * f;
+      }
+    }
+    idle = 0;
+  }
+  function frame() {
+    // skip redraws once everything has settled and the pointer is still
+    if (idle < 3) {
+      ctx.clearRect(0, 0, W, H);
+      let moving = false;
+      const p2 = PROX * PROX;
+      for (const d of dots) {
+        d.vx += -d.dx * 0.06; d.vy += -d.dy * 0.06;
+        d.vx *= 0.86; d.vy *= 0.86;
+        d.dx += d.vx; d.dy += d.vy;
+        if (Math.abs(d.vx) + Math.abs(d.vy) + Math.abs(d.dx) + Math.abs(d.dy) > 0.05) moving = true;
+        const ex = d.cx - ptr.x, ey = d.cy - ptr.y, q = ex * ex + ey * ey;
+        let c = base, r = SIZE / 2;
+        if (q < p2) {
+          const t = 1 - Math.sqrt(q) / PROX;
+          c = base.map((b, i) => Math.round(b + (active[i] - b) * t));
+          r += t * 1.2;
+        }
+        ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+        ctx.beginPath(); ctx.arc(d.cx + d.dx, d.cy + d.dy, r, 0, 6.283); ctx.fill();
+      }
+      idle = moving ? 0 : idle + 1;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('pointermove', (e) => {
+    const now = performance.now(), dt = Math.max(now - (ptr.lt || now - 16), 1);
+    ptr.vx = ((e.clientX - ptr.lx) / dt) * 1000; ptr.vy = ((e.clientY - ptr.ly) / dt) * 1000;
+    ptr.lx = ptr.x = e.clientX; ptr.ly = ptr.y = e.clientY; ptr.lt = now;
+    idle = 0;
+    const speed = Math.hypot(ptr.vx, ptr.vy);
+    if (!reduce && fine && speed > 300) kick(ptr.x - ptr.vx * 0.02, ptr.y - ptr.vy * 0.02, PROX * 0.8, Math.min(speed, 3000) / 900);
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => { ptr.x = ptr.y = -9999; idle = 0; });
+  addEventListener('click', (e) => { if (!reduce) kick(e.clientX, e.clientY, SHOCK, 9); });
+  addEventListener('resize', build);
+
+  recolor(); build(); requestAnimationFrame(frame);
+  return { recolor };
+}
 
 function buildGraph(canvas, profile, projects, leadership, slug) {
   const ctx = canvas.getContext('2d');
