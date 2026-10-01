@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Mock For All",
+    "short": "Mock For All",
+    "role": "Founder and Director",
+    "dates": "May 2025 - Present",
+    "featured": true,
+    "summary": "A free platform that makes mock trial accessible to students across China. I lead a 15-person team across marketing, tech, and video, and built an AI model trained on 300+ rounds of tournament data (AMTA, TOC, EMPIRE, IMT, Trial By Combat) that gives students feedback.",
+    "stats": [
+      {
+        "value": "300+",
+        "label": "rounds of training data"
+      },
+      {
+        "value": "175k+",
+        "label": "views across 5 platforms"
+      },
+      {
+        "value": "50+",
+        "label": "learning resources"
+      }
+    ],
+    "tags": [
+      "AI",
+      "Law"
+    ],
+    "linkLabel": "Visit Mock For All",
+    "linkUrl": "https://tinyurl.com/mock4all",
+    "image": ""
+  },
+  {
+    "title": "Drones and the future of work",
+    "short": "Drone research",
+    "role": "Independent researcher",
+    "dates": "Feb 2024 - Present",
+    "featured": false,
+    "summary": "A 5,000-word paper on automation at SF Express and Meituan, based on fieldwork at SF's drone testing site and interviews with technicians. The finding: drones help workers, but infrastructure policy lags. I also made a 10-minute documentary.",
+    "stats": [
+      {
+        "value": "210k+",
+        "label": "documentary views"
+      }
+    ],
+    "tags": [
+      "Automation",
+      "AI"
+    ],
+    "linkLabel": "Watch the documentary",
+    "linkUrl": "https://tinyurl.com/droneworker",
+    "image": ""
+  },
+  {
+    "title": "Divorce law in China",
+    "short": "Divorce law research",
+    "role": "Independent researcher",
+    "dates": "Dec 2024 - Present",
+    "featured": false,
+    "summary": "A 4,000-word paper on how the Article 1077 cooling-off period endangers people facing domestic violence. I sent a reform proposal to the NPC Legislative Affairs Commission and built a resource site with hotlines for all 31 provinces.",
+    "stats": [],
+    "tags": [
+      "Law"
+    ],
+    "linkLabel": "Open the resource site",
+    "linkUrl": "https://tinyurl.com/divorcelawcn",
+    "image": ""
+  }
+]

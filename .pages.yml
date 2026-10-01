@@ -1,0 +1,86 @@
+# Pages CMS config: lets you edit this site at https://app.pagescms.org
+media:
+  input: images
+  output: /images
+
+content:
+  - name: profile
+    label: Profile and hero
+    type: file
+    path: content/profile.json
+    format: json
+    fields:
+      - { name: name, label: Full name, type: string }
+      - { name: shortName, label: Short name (nav and tab title), type: string }
+      - { name: school, label: School line above the headline, type: string }
+      - { name: headline, label: Headline, type: string, description: "Keep it under 8 words." }
+      - { name: intro, label: Intro under the headline, type: text, description: "About 20 words." }
+      - { name: photo, label: Headshot (optional), type: image }
+      - { name: email, label: Email, type: string }
+      - { name: phone, label: Phone, type: string }
+      - { name: showPhone, label: Show phone on the site, type: boolean }
+      - { name: github, label: GitHub URL, type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - { name: resume, label: Résumé PDF, type: file }
+      - { name: interests, label: Interests (big nodes in the graph), type: string, list: true }
+      - { name: nowUpdated, label: Now section updated, type: string }
+      - { name: now, label: Now items, type: string, list: true }
+      - { name: contactLine, label: Line above your email, type: string }
+
+  - name: projects
+    label: Projects
+    type: file
+    path: content/projects.json
+    format: json
+    list: true
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: short, label: Short label for the graph, type: string }
+      - { name: role, label: Role, type: string }
+      - { name: dates, label: Dates, type: string }
+      - { name: featured, label: Featured (big panel at the top), type: boolean }
+      - { name: summary, label: Summary, type: text }
+      - name: stats
+        label: Stats
+        type: object
+        list: true
+        fields:
+          - { name: value, label: Number, type: string }
+          - { name: label, label: Label, type: string }
+      - { name: tags, label: Tags (must match an interest to appear in the graph), type: string, list: true }
+      - { name: linkLabel, label: Link text, type: string }
+      - { name: linkUrl, label: Link URL, type: string }
+      - { name: image, label: Image (optional), type: image }
+
+  - name: leadership
+    label: Leadership
+    type: file
+    path: content/leadership.json
+    format: json
+    list: true
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: short, label: Short label for the graph, type: string }
+      - { name: org, label: Organization, type: string }
+      - { name: dates, label: Dates, type: string }
+      - { name: summary, label: Summary, type: text }
+      - { name: tags, label: Tags (must match an interest to appear in the graph), type: string, list: true }
+
+  - name: writing
+    label: Writing and talks
+    type: file
+    path: content/writing.json
+    format: json
+    list: true
+    fields:
+      - { name: title, label: Title, type: string }
+      - { name: kind, label: Type (Talk, Paper, Award...), type: string }
+      - { name: url, label: Link (optional), type: string }
+
+  - name: honors
+    label: Honors
+    type: file
+    path: content/honors.json
+    format: json
+    fields:
+      - { name: items, label: Honors, type: string, list: true }
