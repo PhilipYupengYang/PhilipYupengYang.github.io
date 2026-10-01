@@ -91,7 +91,7 @@ section { padding: 88px 0; }
 .hero-school { margin: 0 0 18px; color: var(--accent); font-weight: 500; font-size: 15px; }
 h1 {
   margin: 0; font-weight: 600; letter-spacing: -0.04em; line-height: 1.02;
-  font-size: clamp(44px, 6vw, 76px); max-width: 11ch;
+  font-size: clamp(40px, 5vw, 64px); max-width: 15ch;
 }
 .hero-intro { color: var(--muted); font-size: 19px; max-width: 44ch; margin: 24px 0 0; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
