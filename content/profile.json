@@ -2,15 +2,15 @@
   "name": "Yupeng (Philip) Yang",
   "shortName": "Philip Yang",
   "school": "Vanderbilt University",
-  "headline": "Building with AI, for law and markets.",
-  "intro": "I trained a model on 300+ mock trial rounds and studied how automation reshapes work. Next: machine learning and quantitative finance.",
+  "headline": "Law, markets, and the machines changing both.",
+  "intro": "I research how automation reshapes work and build projects that make law easier to learn. Next: machine learning and quantitative finance.",
   "photo": "",
   "email": "yupengyang365987@gmail.com",
   "phone": "",
   "showPhone": false,
   "github": "https://github.com/PhilipYupengYang",
   "linkedin": "",
-  "resume": "resume.pdf",
+  "resume": "",
   "interests": [
     "AI",
     "Finance",
@@ -20,7 +20,7 @@
   "nowUpdated": "October 2026",
   "now": [
     "Studying at Vanderbilt University",
-    "Expanding the Mock For All AI model and its learning library",
+    "Growing Mock For All's mock trial tutorials on social media",
     "Learning Python for data analysis and machine learning"
   ],
   "contactLine": "Open to AI research, ML engineering, and quant internships."

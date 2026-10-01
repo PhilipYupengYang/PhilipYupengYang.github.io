@@ -5,23 +5,22 @@
     "role": "Founder and Director",
     "dates": "May 2025 - Present",
     "featured": true,
-    "summary": "A free platform that makes mock trial accessible to students across China. I lead a 15-person team across marketing, tech, and video, and built an AI model trained on 300+ rounds of tournament data (AMTA, TOC, EMPIRE, IMT, Trial By Combat) that gives students feedback.",
+    "summary": "A student-run project that makes mock trial accessible to students across China. I lead 15+ peers across marketing and video, publishing tutorials and case breakdowns on Rednote, Douyin, Bilibili, Instagram, and YouTube.",
     "stats": [
       {
-        "value": "300+",
-        "label": "rounds of training data"
-      },
-      {
         "value": "175k+",
-        "label": "views across 5 platforms"
+        "label": "views"
       },
       {
-        "value": "50+",
-        "label": "learning resources"
+        "value": "5",
+        "label": "platforms"
+      },
+      {
+        "value": "15+",
+        "label": "team members"
       }
     ],
     "tags": [
-      "AI",
       "Law"
     ],
     "linkLabel": "Visit Mock For All",
