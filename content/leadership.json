@@ -1,38 +1,75 @@
 [
   {
-    "title": "Mock Trial Team Captain",
+    "title": "Mock Trial Team",
     "short": "Mock trial captain",
+    "role": "Founding member, then Captain",
     "org": "BASIS International School Shenzhen",
     "dates": "2023 - 2026",
-    "summary": "Grew the team from 5 to 50+ members and secured mentorship from UCLA's Mock Trial A-Team. Results include 1st place at LACAH and BINJ.",
+    "summary": "Helped start the team, then grew it from 5 to 50+ members, secured mentorship from UCLA's Mock Trial A-Team, and coached teams to 1st place at LACAH and BINJ.",
+    "links": [],
     "tags": [
       "Law"
     ]
   },
   {
-    "title": "Student Council Treasurer, then Vice President",
+    "title": "TEDxYouth@BISZ",
+    "short": "",
+    "role": "Speaker, then Host and Organizer",
+    "org": "BASIS International School Shenzhen",
+    "dates": "2022 - 2025",
+    "summary": "Gave two talks with 1.5K+ combined views, then hosted and directed the event with seven speakers.",
+    "links": [
+      {
+        "label": "Talk: Post-COVID society",
+        "url": "https://tinyurl.com/TEDxBeKid"
+      },
+      {
+        "label": "Talk: A New Renaissance",
+        "url": "https://tinyurl.com/TEDxNewRenaissance"
+      }
+    ],
+    "tags": []
+  },
+  {
+    "title": "Student Council",
     "short": "Student Council treasurer",
+    "role": "Treasurer, then Vice President",
     "org": "BASIS International School Shenzhen",
     "dates": "2022 - 2024",
-    "summary": "Managed 30,000+ RMB in funds, built the council's financial tracking sheets, and wrote its constitution.",
+    "summary": "Managed 30,000+ RMB with new tracking sheets, created an evaluation system for 40+ clubs, and wrote the council's constitution.",
+    "links": [],
     "tags": [
       "Finance"
     ]
   },
   {
-    "title": "National Honor Society Vice President",
-    "short": "NHS vice president",
+    "title": "National Honor Society",
+    "short": "",
+    "role": "NJHS President, then NHS Vice President",
     "org": "BASIS International School Shenzhen",
-    "dates": "2024 - 2025",
-    "summary": "Led the Joy 2 Plateau campaign, which delivered 1,500+ items to 8 schools in Tibet. Ran events for 400+ attendees with 100+ volunteers.",
+    "dates": "2022 - 2025",
+    "summary": "Led a donation drive that delivered 1,500+ books, toys, and supplies to 8 primary schools in Tibet, and ran events for 400+ attendees.",
+    "links": [],
     "tags": []
   },
   {
-    "title": "Co-founder, Environmental Sustainability Committee",
-    "short": "Sustainability committee",
+    "title": "Environmental Sustainability Committee",
+    "short": "",
+    "role": "Co-founder",
     "org": "BASIS International School Shenzhen",
     "dates": "2023 - 2026",
-    "summary": "Led 42 volunteers who recycled and donated 2,000+ items to rural Guangdong.",
+    "summary": "Led 42 volunteers who recycled and donated 2,000+ items to rural villages in Guangdong.",
+    "links": [],
+    "tags": []
+  },
+  {
+    "title": "Teaching",
+    "short": "",
+    "role": "AP U.S. History TA and Speech and Debate mentor",
+    "org": "BASIS International School Shenzhen",
+    "dates": "2024 - 2026",
+    "summary": "Graded work, prepared lessons, and taught one history class per quarter. My debate mentees went on to compete at UPenn and the BASIS China Championship.",
+    "links": [],
     "tags": []
   }
 ]

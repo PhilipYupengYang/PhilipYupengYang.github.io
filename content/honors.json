@@ -1,12 +1,31 @@
 {
-  "items": [
-    "HiMCM Honorable Mention",
-    "AP Scholar with Distinction",
-    "TOC Asia Public Forum Champion, twice",
-    "BASIS China Speech and Debate Student of the Year",
-    "Stanford Invitational, 5th place speaker",
-    "LACAH Mock Trial, 1st place",
-    "IMT Outstanding Attorney",
-    "BINJ Mock Trial, 1st place"
+  "groups": [
+    {
+      "name": "Mock trial",
+      "items": [
+        "LACAH, 1st place team (2024)",
+        "BINJ, 1st place team and full-rank attorney (2025)",
+        "IMT, Outstanding Attorney (2024)",
+        "EMPIRE, team captain (2025)"
+      ]
+    },
+    {
+      "name": "Speech and debate",
+      "items": [
+        "TOC Asia, Public Forum champion, twice",
+        "BASIS China Speech and Debate Student of the Year (2022 - 2025)",
+        "Stanford Invitational, 5th place speaker (2024)",
+        "NHSDLC, Public Forum 3rd place (2025)"
+      ]
+    },
+    {
+      "name": "Academics",
+      "items": [
+        "HiMCM math modeling, Honorable Mention (2023)",
+        "John Locke Essay Competition, Law commendation, twice",
+        "AP Scholar with Distinction",
+        "National Latin Exam, Silver (2024)"
+      ]
+    }
   ]
 }

@@ -1,20 +1,21 @@
-// Renders the page from /content/*.json (edited through Pages CMS) and runs the hero graph.
+// Renders the page from /content/*.json (edited through Pages CMS) and runs the interactive pieces.
 (async function () {
   const load = (f) => fetch(`content/${f}.json`, { cache: 'no-cache' }).then((r) => r.json());
-  const [profile, projects, leadership, writing, honors] = await Promise.all(
-    ['profile', 'projects', 'leadership', 'writing', 'honors'].map(load)
+  const [profile, projects, research, leadership, honors] = await Promise.all(
+    ['profile', 'projects', 'research', 'leadership', 'honors'].map(load)
   );
 
   const el = (tag, attrs = {}, kids = []) => {
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
       if (k === 'text') n.textContent = v;
-      else if (v !== undefined && v !== null && v !== false) n.setAttribute(k, v);
+      else if (v !== undefined && v !== null && v !== false && v !== '') n.setAttribute(k, v);
     }
     [].concat(kids).filter(Boolean).forEach((c) => n.append(c));
     return n;
   };
   const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const ext = (href, text, cls = 'textlink') => (href ? el('a', { class: cls, href, target: '_blank', rel: 'noopener', text }) : null);
 
   // simple bindings: data-bind="key", data-bind-href="key" or "key:mailto"
   document.querySelectorAll('[data-bind]').forEach((n) => { n.textContent = profile[n.dataset.bind] || ''; });
@@ -23,10 +24,15 @@
     const v = profile[key];
     if (v) n.href = scheme ? `${scheme}:${v}` : v; else n.remove();
   });
-  document.title = profile.shortName;
+  document.title = `${profile.shortName} | ${profile.school}`;
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // now
+  // about
+  const bio = document.getElementById('bio');
+  if (profile.photo) bio.append(el('img', { class: 'avatar', src: profile.photo, alt: `Portrait of ${profile.shortName}`, width: 96, height: 96 }));
+  (profile.bio || []).forEach((t) => bio.append(el('p', { text: t })));
+  const facts = document.getElementById('facts');
+  (profile.facts || []).forEach((f) => facts.append(el('div', {}, [el('dt', { text: f.label }), el('dd', { text: f.value })])));
   const nowList = document.getElementById('now-list');
   (profile.now || []).forEach((t) => nowList.append(el('li', { text: t })));
 
@@ -34,13 +40,9 @@
   const stats = (list) => (list && list.length
     ? el('ul', { class: 'stats' }, list.map((s) => el('li', {}, [el('b', { text: s.value }), el('span', { text: s.label })])))
     : null);
-  const link = (p) => (p.linkUrl
-    ? el('a', { class: 'textlink', href: p.linkUrl, target: '_blank', rel: 'noopener', text: p.linkLabel || 'Open' })
-    : null);
   const meta = (p) => el('div', { class: 'meta' }, [el('span', { class: 'mono', text: p.dates }), el('span', { text: p.role })]);
 
   const featured = projects.find((p) => p.featured) || projects[0];
-  const rest = projects.filter((p) => p !== featured);
   if (featured) {
     document.getElementById('featured').append(
       el('article', { class: 'featured', id: `p-${slug(featured.title)}` }, [
@@ -48,32 +50,35 @@
           meta(featured),
           el('h3', { text: featured.title }),
           el('p', { class: 'summary', text: featured.summary }),
-          link(featured),
+          ext(featured.linkUrl, featured.linkLabel || 'Open'),
           featured.image ? el('img', { class: 'shot', src: featured.image, alt: `${featured.title} screenshot`, loading: 'lazy' }) : null,
         ]),
         stats(featured.stats),
       ])
     );
   }
-  const grid = document.getElementById('projects');
-  rest.forEach((p) => grid.append(
+  const grid = document.getElementById('project-grid');
+  projects.filter((p) => p !== featured).forEach((p) => grid.append(
     el('article', { class: 'project', id: `p-${slug(p.title)}` }, [
       meta(p),
       el('h3', { text: p.title }),
       el('p', { class: 'summary', text: p.summary }),
       p.image ? el('img', { class: 'shot', src: p.image, alt: `${p.title} image`, loading: 'lazy' }) : null,
       stats(p.stats),
-      link(p),
+      ext(p.linkUrl, p.linkLabel || 'Open'),
     ])
   ));
 
-  // writing
-  const wl = document.getElementById('writing-list');
-  writing.forEach((w) => wl.append(el('li', {}, [
-    el('span', { class: 'mono', text: w.kind }),
-    w.url
-      ? el('a', { href: w.url, target: '_blank', rel: 'noopener' }, [w.title, el('span', { class: 'ext', text: '(opens in new tab)' })])
-      : el('span', { text: w.title }),
+  // research
+  const rl = document.getElementById('research-list');
+  research.forEach((r) => rl.append(el('li', { id: `r-${slug(r.title)}` }, [
+    el('div', { class: 'research-meta' }, [el('span', { class: 'mono', text: r.dates }), el('span', { text: r.type })]),
+    el('div', {}, [
+      el('h3', { text: r.title }),
+      el('p', { class: 'summary', text: r.summary }),
+      r.finding ? el('p', { class: 'finding' }, [el('b', { text: 'What I found: ' }), r.finding]) : null,
+      ext(r.linkUrl, r.linkLabel || 'Open'),
+    ]),
   ])));
 
   // leadership
@@ -81,20 +86,17 @@
   leadership.forEach((l) => tl.append(el('li', { id: `l-${slug(l.title)}` }, [
     el('span', { class: 'mono muted', text: l.dates }),
     el('h3', { text: l.title }),
-    el('p', { class: 'org', text: l.org }),
+    el('p', { class: 'org', text: [l.role, l.org].filter(Boolean).join(', ') }),
     el('p', { class: 'sum', text: l.summary }),
+    (l.links || []).length ? el('p', { class: 'sublinks' }, l.links.map((x) => ext(x.url, x.label))) : null,
   ])));
 
-  // honors marquee (second copy is decorative, for the seamless loop)
-  const hl = document.getElementById('honors-list');
-  const items = honors.items || [];
-  items.forEach((h) => hl.append(el('li', { text: h })));
-  items.forEach((h) => hl.append(el('li', { text: h, 'aria-hidden': 'true' })));
-
-  // optional headshot, shown above the contact section
-  if (profile.photo) {
-    document.getElementById('contact').prepend(el('img', { class: 'avatar', src: profile.photo, alt: `Portrait of ${profile.shortName}`, width: 88, height: 88, loading: 'lazy' }));
-  }
+  // honors, grouped
+  const hg = document.getElementById('honor-groups');
+  (honors.groups || []).forEach((g) => hg.append(el('div', { class: 'honor-group' }, [
+    el('h3', { text: g.name }),
+    el('ul', {}, (g.items || []).map((t) => el('li', { text: t }))),
+  ])));
 
   // contact links
   const links = document.getElementById('links');
@@ -113,9 +115,30 @@
     dots.recolor();
   });
 
-  const graph = buildGraph(document.getElementById('graph'), profile, projects, leadership, slug);
+  // mobile menu
+  const menuBtn = document.querySelector('.menu-btn');
+  const menu = document.getElementById('menu');
+  const setMenu = (open) => { menu.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
+  menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+
+  // highlight the tab for the section on screen
+  const tabs = [...menu.querySelectorAll('a')];
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      tabs.forEach((a) => a.toggleAttribute('aria-current', a.hash === `#${e.target.id}`));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  tabs.forEach((a) => { const s = document.querySelector(a.hash); if (s) spy.observe(s); });
+
+  const graph = buildGraph(document.getElementById('graph'), profile, [
+    { items: projects, kind: 'project', prefix: 'p' },
+    { items: research, kind: 'project', prefix: 'r' },
+    { items: leadership, kind: 'role', prefix: 'l' },
+  ], slug);
   const dots = buildDots(document.getElementById('dots'));
-  initSpotlight(document.querySelectorAll('.featured, .project, .timeline li, .graph'));
+  initSpotlight(document.querySelectorAll('.featured, .project, .timeline li, .research li, .graph'));
 })();
 
 // Cursor spotlight + lit border on cards. Ported from Magic UI's MagicCard (React + motion)
@@ -215,7 +238,7 @@ function buildDots(canvas) {
   return { recolor };
 }
 
-function buildGraph(canvas, profile, projects, leadership, slug) {
+function buildGraph(canvas, profile, groups, slug) {
   const ctx = canvas.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const topics = profile.interests || [];
@@ -230,8 +253,7 @@ function buildGraph(canvas, profile, projects, leadership, slug) {
     nodes.push(n);
     tags.forEach((t) => edges.push([n, nodes.find((x) => x.id === `t:${t}`)]));
   };
-  projects.forEach((p) => addItem(p, 'project', `p-${slug(p.title)}`));
-  leadership.forEach((l) => addItem(l, 'role', `l-${slug(l.title)}`));
+  groups.forEach((g) => g.items.forEach((it) => addItem(it, g.kind, `${g.prefix}-${slug(it.title)}`)));
 
   let W = 0, H = 0, colors = {}, hover = null, visible = true, t0 = performance.now();
   const pulses = [];

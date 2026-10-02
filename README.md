@@ -6,7 +6,7 @@ Static site, hosted free on GitHub Pages. All text lives in `content/*.json`, so
 
 1. Go to https://app.pagescms.org and sign in with GitHub.
 2. Pick this repository.
-3. Choose a section in the sidebar (Profile, Projects, Leadership, Writing, Honors), click a field, type, and press **Save**.
+3. Choose a section in the sidebar (Profile and About, Projects, Research, Leadership, Honors), click a field, type, and press **Save**.
 4. The site updates by itself in about a minute.
 
 You can upload images (headshot, project screenshots) and a new résumé PDF from the same screen.

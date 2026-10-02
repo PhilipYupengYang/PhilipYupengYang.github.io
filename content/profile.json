@@ -2,8 +2,8 @@
   "name": "Yupeng (Philip) Yang",
   "shortName": "Philip Yang",
   "school": "Vanderbilt University",
-  "headline": "Law, markets, and the machines changing both.",
-  "intro": "I research how automation reshapes work and build projects that make law easier to learn. Next: machine learning and quantitative finance.",
+  "headline": "Hi, I'm Philip Yang.",
+  "intro": "I study how technology reshapes law, work, and markets, and build projects that make hard ideas easier to learn.",
   "photo": "",
   "email": "yupengyang365987@gmail.com",
   "phone": "",
@@ -19,9 +19,32 @@
   ],
   "nowUpdated": "October 2026",
   "now": [
-    "Studying at Vanderbilt University",
+    "Starting my first year at Vanderbilt",
     "Growing Mock For All's mock trial tutorials on social media",
     "Learning Python for data analysis and machine learning"
   ],
-  "contactLine": "Open to AI research, ML engineering, and quant internships."
+  "contactLine": "Looking for AI research, ML engineering, or quant internships. I'd love to hear from you.",
+  "bio": [
+    "I grew up in Shenzhen, China, and came to Vanderbilt after four years of mock trial, debate, and independent research at BASIS International School Shenzhen.",
+    "My work so far sits where people meet systems: how delivery drones change jobs, how a divorce law affects families facing violence, and how free tutorials can open mock trial to students who never had a coach.",
+    "Next, I'm building technical skills in AI and quantitative finance so I can work on those questions with data, not just arguments."
+  ],
+  "facts": [
+    {
+      "label": "Studying",
+      "value": "Vanderbilt University"
+    },
+    {
+      "label": "Based in",
+      "value": "Nashville, Tennessee"
+    },
+    {
+      "label": "From",
+      "value": "Shenzhen, China"
+    },
+    {
+      "label": "Focus",
+      "value": "AI, finance, law"
+    }
+  ]
 }

@@ -22,6 +22,14 @@ content:
       - { name: github, label: GitHub URL, type: string }
       - { name: linkedin, label: LinkedIn URL, type: string }
       - { name: resume, label: Résumé PDF, type: file }
+      - { name: bio, label: About paragraphs, type: text, list: true }
+      - name: facts
+        label: Quick facts (About sidebar)
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string }
+          - { name: value, label: Value, type: string }
       - { name: interests, label: Interests (big nodes in the graph), type: string, list: true }
       - { name: nowUpdated, label: Now section updated, type: string }
       - { name: now, label: Now items, type: string, list: true }
@@ -61,21 +69,35 @@ content:
     fields:
       - { name: title, label: Title, type: string }
       - { name: short, label: Short label for the graph, type: string }
+      - { name: role, label: Role, type: string }
       - { name: org, label: Organization, type: string }
       - { name: dates, label: Dates, type: string }
       - { name: summary, label: Summary, type: text }
+      - name: links
+        label: Extra links
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Link text, type: string }
+          - { name: url, label: URL, type: string }
       - { name: tags, label: Tags (must match an interest to appear in the graph), type: string, list: true }
 
-  - name: writing
-    label: Writing and talks
+  - name: research
+    label: Research
     type: file
-    path: content/writing.json
+    path: content/research.json
     format: json
     list: true
     fields:
       - { name: title, label: Title, type: string }
-      - { name: kind, label: Type (Talk, Paper, Award...), type: string }
-      - { name: url, label: Link (optional), type: string }
+      - { name: short, label: Short label for the graph, type: string }
+      - { name: type, label: "Type (for example: Independent paper, 5,000 words)", type: string }
+      - { name: dates, label: Dates, type: string }
+      - { name: summary, label: What it is, type: text }
+      - { name: finding, label: What I found (optional), type: text }
+      - { name: linkLabel, label: Link text, type: string }
+      - { name: linkUrl, label: Link URL, type: string }
+      - { name: tags, label: Tags (must match an interest to appear in the graph), type: string, list: true }
 
   - name: honors
     label: Honors
@@ -83,4 +105,10 @@ content:
     path: content/honors.json
     format: json
     fields:
-      - { name: items, label: Honors, type: string, list: true }
+      - name: groups
+        label: Groups
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Group name, type: string }
+          - { name: items, label: Honors, type: string, list: true }
